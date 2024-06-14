@@ -1,4 +1,4 @@
-package com.example.homework_15
+package com.example.homework_15.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
+import com.example.homework_15.data.UsefulActivitiesRepository
 import com.example.homework_15.databinding.FragmentFirstBinding
-import kotlinx.coroutines.flow.filterIsInstance
+import com.example.homework_15.domain.GetUsefulActivityUseCase
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
@@ -20,8 +19,9 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
-
-    val vm = MainViewModel()
+    private val usefulActivitiesRepository = UsefulActivitiesRepository()
+    private val getUsefulActivityUseCase = GetUsefulActivityUseCase(usefulActivitiesRepository)
+    val vm = MainViewModel(getUsefulActivityUseCase)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,13 +39,7 @@ class FirstFragment : Fragment() {
         vm.state.onEach {
             when(it) {
                 is State.Success -> {
-                    binding.firstName.text = it.users.firstOrNull()?.name?.first
-                    binding.lastName.text = it.users.firstOrNull()?.name?.last
-                    binding.title.text = it.users.firstOrNull()?.name?.title
-                    Glide.with(this)
-                        .load(it.users.firstOrNull()?.picture?.medium)
-                        .into(binding.imageView)
-
+                    binding.secondText.text = it.usefulActivity!!
                     binding.buttonFirst.setOnClickListener {
                         vm.start().toString()
                     }

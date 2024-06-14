@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -53,4 +54,6 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.14.2")
     // Skip this if you don't want to use integration libraries or configure Glide.
     annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
+    implementation("com.google.dagger:dagger:2.50")
+    ksp("com.google.dagger:dagger-compiler:2.50")
 }

@@ -6,7 +6,7 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">ОБНОВИТЬ</string>
     <string name="previous">Previous</string>
-    <string name="first_name_text">First name: </string>
+    <string name="first_text">Занятие на сегодня: </string>
     <string name="last_name_text">Last name: </string>
     <string name="title_text">Title: </string>
 
