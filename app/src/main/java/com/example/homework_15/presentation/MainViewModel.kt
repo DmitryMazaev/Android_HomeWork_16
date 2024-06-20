@@ -13,18 +13,16 @@ class MainViewModel (private val getUsefulActivityUseCase: GetUsefulActivityUseC
     private val _state = MutableStateFlow<State>(State.Initial)
     val state = _state.asStateFlow()
 
-    val apiService by lazy {
-        RetrofitHelepr.retrofitEngine.create(UsefulActivitiesRepository::class.java)
-    }
-
     fun start() {
-       // state.value = State.Loading
         viewModelScope.launch(Dispatchers.IO) {
-            val result = apiService.getUsefulActivity()
+            val result = getUsefulActivityUseCase.execute()
             val usefulActivity = result.activity
             val newState = State.Success(usefulActivity)
             _state.value = newState
         }
+    }
+    suspend fun getExercise(getUsefulActivityUseCase: GetUsefulActivityUseCase):String {
+        return getUsefulActivityUseCase.execute().toString()
     }
 
     override fun onCleared() {

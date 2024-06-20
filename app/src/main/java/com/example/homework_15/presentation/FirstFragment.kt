@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.viewModelScope
+import com.example.homework_15.data.RetrofitHelepr
 import com.example.homework_15.data.UsefulActivitiesRepository
 import com.example.homework_15.databinding.FragmentFirstBinding
 import com.example.homework_15.domain.GetUsefulActivityUseCase
@@ -19,9 +20,9 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val binding get() = _binding!!
-    private val usefulActivitiesRepository = UsefulActivitiesRepository()
+    private val usefulActivitiesRepository = UsefulActivitiesRepository(RetrofitHelepr.retrofitEngine)
     private val getUsefulActivityUseCase = GetUsefulActivityUseCase(usefulActivitiesRepository)
-    val vm = MainViewModel(getUsefulActivityUseCase)
+    private val vm = MainViewModel(getUsefulActivityUseCase)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +40,8 @@ class FirstFragment : Fragment() {
         vm.state.onEach {
             when(it) {
                 is State.Success -> {
-                    binding.secondText.text = it.usefulActivity!!
+                    //vm.start().toString()
+                    binding.secondText.text = vm.getExercise(getUsefulActivityUseCase)
                     binding.buttonFirst.setOnClickListener {
                         vm.start().toString()
                     }
