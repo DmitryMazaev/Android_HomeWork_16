@@ -13,19 +13,5 @@ object RetrofitHelepr {
         .build()
 }
 
-interface UsefulActivitiesService {
-    @GET("random")
-    suspend fun getRandom(): UsefulActivityDto
-}
 
-class UsefulActivitiesRepository @Inject constructor(
-    private val retrofit: Retrofit
-) {
-
-    private val service = retrofit.create(UsefulActivitiesService::class.java)
-
-    suspend fun getUsefulActivity(): UsefulActivity {
-        return service.getRandom()
-    }
-}
 
